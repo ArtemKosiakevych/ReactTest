@@ -1,0 +1,128 @@
+.headerWrapper {
+  height: 50px;
+  background-color: #282c34;
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+}
+
+.app-logo {
+  animation: App-logo-spin infinite 2s linear;
+  height: 35px;
+  margin-left: 10px;
+}
+
+.search {
+  height: 35px;
+  color: #4e535e;
+}
+
+.headerTitle{
+  font-size: 15px;
+  text-align: center;
+  color: aqua;
+  font-family: 'Courier New', Courier, monospace;
+  margin-bottom: 0px;
+}
+
+.headerLeft {
+   width: 40%;
+   height: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: flex-end;
+   margin-right: 5%;
+}
+
+.row {
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+}
+
+.searchBox {
+  height: 30px;
+  width: 200px;
+  border: 1px solid #4e535e;
+  border-radius: 4px;
+  display: flex;
+  align-items: center
+}
+
+.searchInput {
+  height: 30px;
+  color: white;
+  border: 0px solid #4e535e;
+  background-color: transparent;
+  font-size: 14px;
+  font-family: 'Courier New', Courier, monospace;
+  padding-left: 5px;
+  box-shadow: transparent;
+}
+
+.searchInput:focus{
+  outline-width: 0px;
+}
+
+.profileBlock {
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile {
+  margin-left: 10px;
+  color: #4e535e;
+  font-size: 30px
+}
+
+.arrow {
+  color: #4e535e;
+  margin-left: 5px;
+  margin-bottom: 5px;
+}
+
+.profileHover {
+  background-color: ghostwhite;
+  position: absolute;
+  top: 45px;
+  border-radius: 3px;
+}
+
+.profileWrapper {
+  height: 50px;
+  display: flex;
+}
+
+.profileHoverList {
+  list-style: none;
+}
+
+.profileHoverText {
+  margin-left: 5px;
+  margin-right: 15px;
+  font-size: 14px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: #4e535e;
+}
+
+.profileHoverItem {
+  height: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.separator {
+  margin: 0px;
+}
+
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
