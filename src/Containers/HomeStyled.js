@@ -5,7 +5,7 @@ export const Content = styled.div`
   justify-content: center;
   align-items: center;
   padding: 100px 5%;
-  background-color: #F8FAFA;
+  background-color: #f8fafa;
   position: relative;
   max-width: 1180px;
 `
@@ -15,7 +15,7 @@ export const EmptyComponent = styled.div`
   justify-content: center;
   align-items: center;
   padding: 100px 5%;
-  background-color: #F8FAFA;
+  background-color: #f8fafa;
   display: flex;
 
   span {

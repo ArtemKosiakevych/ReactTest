@@ -3,23 +3,23 @@ import styled from 'styled-components'
 import { Icon } from 'antd'
 
 const Main = styled.h1`
-	height: 366px;
-	width: 100%;
+  height: 366px;
+  width: 100%;
   border-radius: 4px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  box-shadow: 0 1px 10px 0 rgba(52,68,66,0.08);
+  box-shadow: 0 1px 10px 0 rgba(52, 68, 66, 0.08);
   margin: 15px 0px;
   overflow: hidden;
   transition: 200ms;
-  &:hover{
+  &:hover {
     transform: translateY(-6px);
   }
 `
 const Image = styled.img`
-	height: 220px;
-	width: 100%;
+  height: 220px;
+  width: 100%;
   object-fit: cover;
 `
 
@@ -37,11 +37,11 @@ const DataBlocks = styled.div`
 `
 
 const DataBlock = styled.div`
-  box-sizing: border-box;	
-  height: 34px;	
+  box-sizing: border-box;
+  height: 34px;
   width: 63px;
   margin-right: 6px;
-  border: ${props => `1px solid ${props.borderColor}`};	
+  border: ${props => `1px solid ${props.borderColor}`};
   border-radius: 4px;
   flex-direction: 'row';
   display: flex;
@@ -49,16 +49,16 @@ const DataBlock = styled.div`
 `
 
 const IconWrapper = styled.div`
-  height: 100%;	
-  width: 26px;	
-  border-radius: 4px 0 0 4px;	
+  height: 100%;
+  width: 26px;
+  border-radius: 4px 0 0 4px;
   background-color: rgb(21, 104, 185, 0.1);
   display: flex;
   justify-content: center;
   align-items: center;
 `
 const StyledIcon = styled(Icon)`
-  color: ${props => props.color};	
+  color: ${props => props.color};
   font-size: 20px;
   padding: 3px 3px;
 `
@@ -72,48 +72,49 @@ const HoursWrapper = styled.div`
 `
 
 const Label = styled.span`
-  color: ${props => props.color};	
-  font-family: "Noto Sans";	
-  font-size: 10px;	
-  font-weight: bold;	
-  line-height: 17px;	
+  color: ${props => props.color};
+  font-family: 'Noto Sans';
+  font-size: 10px;
+  font-weight: bold;
+  line-height: 17px;
   align-self: center;
 `
 const Count = styled.span`
-  color: #344442;	
-  font-family: "Noto Sans";	
-  font-size: 16px;	
-  line-height: 17px;	
+  color: #344442;
+  font-family: 'Noto Sans';
+  font-size: 16px;
+  line-height: 17px;
   text-align: center;
   align-self: center;
 `
 export default class Card extends React.Component {
   render() {
-    const picture = 'https://c1.staticflickr.com/2/1520/24330829813_944c817720_b.jpg'
+    const picture =
+      'https://c1.staticflickr.com/2/1520/24330829813_944c817720_b.jpg'
     const dataArray = [
       {
         icon: 'slack',
         label: 'days',
         count: 12,
-        color: '#1568B9'
+        color: '#1568B9',
       },
       {
         icon: 'twitter',
         label: 'HRS',
         count: 12,
-        color: '#169080'
+        color: '#169080',
       },
       {
         icon: 'skype',
         label: 'min',
         count: 12,
-        color: '#87BD24'
+        color: '#87BD24',
       },
       {
         icon: 'github',
         label: 'hrs',
         count: 12,
-        color: '#858F8E'
+        color: '#858F8E',
       },
     ]
     return (
@@ -123,9 +124,9 @@ export default class Card extends React.Component {
           <Title>{this.props.title}</Title>
         </div>
         <DataBlocks>
-          {dataArray.map(i => {
+          {dataArray.map((i, index) => {
             return (
-              <DataBlock borderColor={i.color}>
+              <DataBlock key={index} borderColor={i.color}>
                 <IconWrapper>
                   <StyledIcon color={i.color} type={i.icon} />
                 </IconWrapper>

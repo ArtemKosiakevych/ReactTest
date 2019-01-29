@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Button as AntButton } from 'antd';
+import { Button as AntButton } from 'antd'
 
 export const View = styled.div`
   display: flex;
