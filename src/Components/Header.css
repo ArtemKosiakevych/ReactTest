@@ -1,9 +1,13 @@
 .headerWrapper {
   height: 50px;
+  width: 100%;
+  top: 0px;
   background-color: #282c34;
   align-items: center;
   justify-content: space-between;
   display: flex;
+  position: fixed;
+  z-index: 1;
 }
 
 .app-logo {

@@ -1,5 +1,6 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Link } from "react-router-dom";
 
 import './Header.css'
 import logo from '../logo.svg';
@@ -9,16 +10,11 @@ export default class Header extends React.Component {
     hover: false
   }
 
-  onPress = () => {
-    alert('')
-  }
-
   onChange = (e) => {
-    console.log(e.target.value)
-  }
-
-  onSearch = (text) => {
-    console.log(text)
+    const handleSearch = this.props.handleSearch
+    if (handleSearch) {
+      handleSearch(e.target.value)
+    }
   }
 
   hoverOn = () => {
@@ -29,33 +25,17 @@ export default class Header extends React.Component {
     this.setState({ hover: false })
   }
 
-  handleProfile = () => {
-    alert('handleProfile')
-  }
-
-  handleSettings = () => {
-    alert('handleSettings')
-  }
-
-  handleHome = () => {
-    alert('handleHome')
-  }
-
   renderProfileHover() {
     if (!this.state.hover) return
     return (
       <div className='profileHover'>
         <ul className='profileHoverList'>
-          <li onClick={this.handleProfile} className={'profileHoverItem'}>
-            <span className={'profileHoverText'}>Profile</span>
+          <li className={'profileHoverItem'}>
+            <Link className={'profileHoverText'} to="/profile/">Profile</Link>
           </li>
           <hr className='separator' />
-          <li onClick={this.handleSettings} className={'profileHoverItem'}>
-            <span className={'profileHoverText'}>Settings</span>
-          </li>
-          <hr className='separator' />
-          <li onClick={this.handleHome} className={'profileHoverItem'}>
-            <span className={'profileHoverText'}>Home</span>
+          <li className={'profileHoverItem'}>
+            <Link className={'profileHoverText'} to="/settings/">Settings</Link>
           </li>
         </ul>
       </div>

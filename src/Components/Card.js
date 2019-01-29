@@ -1,14 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Icon } from 'antd'
-import './Card.css'
 
 const Main = styled.h1`
 	height: 366px;
-	width: 380px;
-	border-radius: 4px;
-	background-color: #FFFFFF;
+	width: 100%;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
   box-shadow: 0 1px 10px 0 rgba(52,68,66,0.08);
+  margin: 15px 0px;
   overflow: hidden;
   transition: 200ms;
   &:hover{
@@ -17,7 +19,7 @@ const Main = styled.h1`
 `
 const Image = styled.img`
 	height: 220px;
-	width: 380px;
+	width: 100%;
   object-fit: cover;
 `
 
@@ -30,15 +32,15 @@ const Title = styled.h1`
 
 const DataBlocks = styled.div`
   flex-direction: row;
-  justify-content: space-between;
   display: flex;
-  margin: 0px 19px;
+  margin: 0px 19px 15px;
 `
 
 const DataBlock = styled.div`
   box-sizing: border-box;	
-  height: 44px;	
-  width: 80px;
+  height: 34px;	
+  width: 63px;
+  margin-right: 6px;
   border: ${props => `1px solid ${props.borderColor}`};	
   border-radius: 4px;
   flex-direction: 'row';
@@ -47,8 +49,8 @@ const DataBlock = styled.div`
 `
 
 const IconWrapper = styled.div`
-  height: 42px;	
-  width: 34px;	
+  height: 100%;	
+  width: 26px;	
   border-radius: 4px 0 0 4px;	
   background-color: rgb(21, 104, 185, 0.1);
   display: flex;
@@ -58,6 +60,7 @@ const IconWrapper = styled.div`
 const StyledIcon = styled(Icon)`
   color: ${props => props.color};	
   font-size: 20px;
+  padding: 3px 3px;
 `
 
 const HoursWrapper = styled.div`
@@ -87,7 +90,6 @@ const Count = styled.span`
 export default class Card extends React.Component {
   render() {
     const picture = 'https://c1.staticflickr.com/2/1520/24330829813_944c817720_b.jpg'
-    const text = 'Use reusable shopping bags instead of paper'
     const dataArray = [
       {
         icon: 'slack',
@@ -97,7 +99,7 @@ export default class Card extends React.Component {
       },
       {
         icon: 'twitter',
-        label: 'HOURS',
+        label: 'HRS',
         count: 12,
         color: '#169080'
       },
@@ -109,33 +111,33 @@ export default class Card extends React.Component {
       },
       {
         icon: 'github',
-        label: 'hours',
+        label: 'hrs',
         count: 12,
         color: '#858F8E'
       },
     ]
     return (
-      <div>
-        <Main>
+      <Main onClick={this.props.onClick}>
+        <div>
           <Image src={picture} />
-          <Title>{text}</Title>
-          <DataBlocks>
-            {dataArray.map(i => {
-              return (
-                <DataBlock borderColor={i.color}>
-                  <IconWrapper>
-                    <StyledIcon color={i.color} type={i.icon} />
-                  </IconWrapper>
-                  <HoursWrapper>
-                    <Label color={i.color}>{i.label.toUpperCase()}</Label>
-                    <Count>{i.count.toString().toUpperCase()}</Count>
-                  </HoursWrapper>
-                </DataBlock>
-              )
-            })}
-          </DataBlocks>
-        </Main>
-      </div>
+          <Title>{this.props.title}</Title>
+        </div>
+        <DataBlocks>
+          {dataArray.map(i => {
+            return (
+              <DataBlock borderColor={i.color}>
+                <IconWrapper>
+                  <StyledIcon color={i.color} type={i.icon} />
+                </IconWrapper>
+                <HoursWrapper>
+                  <Label color={i.color}>{i.label.toUpperCase()}</Label>
+                  <Count>{i.count.toString().toUpperCase()}</Count>
+                </HoursWrapper>
+              </DataBlock>
+            )
+          })}
+        </DataBlocks>
+      </Main>
     )
   }
 }
