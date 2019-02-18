@@ -1,6 +1,9 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import { Icon } from 'antd'
+
+import { fadeIn } from 'react-animations'
+const fadeAnimation = keyframes`${fadeIn}`
 
 const Main = styled.h1`
   height: 366px;
@@ -16,6 +19,7 @@ const Main = styled.h1`
   &:hover {
     transform: translateY(-6px);
   }
+  animation: 0.3s ${fadeAnimation};
 `
 const Image = styled.img`
   height: 220px;
