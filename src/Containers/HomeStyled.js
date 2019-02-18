@@ -31,3 +31,11 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
 `
+
+export const CardModalTitle = styled.p`
+  font-size: 20px;
+`
+
+export const CardModalDescription = styled.p`
+  font-size: 16px;
+`

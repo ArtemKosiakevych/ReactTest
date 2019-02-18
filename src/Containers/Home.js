@@ -3,19 +3,31 @@ import { Row, Col, Modal, Spin, Skeleton } from 'antd'
 
 import Header from '../Components/Header'
 import Card from '../Components/Card'
-import { Container, Content, EmptyComponent } from './HomeStyled'
+import {
+  Container,
+  Content,
+  EmptyComponent,
+  CardModalTitle,
+  CardModalDescription,
+} from './HomeStyled'
+import { getNotes, updateNote } from '../api'
 
 export default class HomeScreen extends Component {
   state = {
     visible: false,
     query: '',
     ready: false,
+    data: [],
+    selectedCardTitle: '',
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      this.setState({ ready: true })
-    }, 1500)
+    this.fetchData()
+  }
+
+  async fetchData() {
+    const res = await getNotes()
+    if (res.data) this.setState({ data: res.data, ready: true })
   }
 
   handleCardClick = index => {
@@ -25,10 +37,20 @@ export default class HomeScreen extends Component {
     })
   }
 
-  handleOk = () => {
-    this.setState({
-      visible: false,
+  handleOk = async () => {
+    this.setState({ visible: false })
+    const {
+      selectedCardTitle,
+      selectedCardDescription,
+      selectedCard,
+      data,
+    } = this.state
+    const id = data[selectedCard] && data[selectedCard]._id
+    await updateNote(id, {
+      title: selectedCardTitle,
+      description: selectedCardDescription,
     })
+    this.fetchData()
   }
 
   handleCancel = () => {
@@ -41,22 +63,23 @@ export default class HomeScreen extends Component {
     this.setState({ query })
   }
 
+  handleChangeTitle = event => {
+    this.setState({ selectedCardTitle: event.target.textContent })
+  }
+
+  handleChangeDescription = event => {
+    this.setState({ selectedCardDescription: event.target.textContent })
+  }
+
   handleProfile = () => {}
   render() {
-    const cardTitles = [
-      'Use reusable shopping bags instead of paper',
-      'Use reusable shopping bags instead',
-      'Subway/tram to work instead of drive',
-      'Carpool with someone',
-      'Use reusable shopping bags instead of plastic',
-      'Plant a tree in the southern US',
-      'abd',
-      'asdwqq111',
-      '12',
-    ]
-    const data = cardTitles.filter(i =>
-      i.toLowerCase().includes(this.state.query.toLowerCase()),
+    const { data, query, selectedCard } = this.state
+    const notes = data.filter(i =>
+      i.title.toLowerCase().includes(query.toLowerCase()),
     )
+    const selectedCardTitle = data[selectedCard] && data[selectedCard].title
+    const selectedCardDescription =
+      data[selectedCard] && data[selectedCard].description
     return (
       <Container>
         <Header
@@ -64,13 +87,14 @@ export default class HomeScreen extends Component {
           handleSearch={this.handleSearch}
         />
         <Content>
-          {data.length > 0 ? (
+          {notes.length > 0 ? (
             <Row gutter={10}>
-              {data.map((i, index) => (
+              {notes.map((i, index) => (
                 <Col key={index} xl={8} lg={12} md={12} xs={24}>
                   {this.state.ready ? (
                     <Card
-                      title={i}
+                      title={i.title}
+                      description={i.description}
                       onClick={() => this.handleCardClick(index)}
                     />
                   ) : (
@@ -85,11 +109,18 @@ export default class HomeScreen extends Component {
             </EmptyComponent>
           )}
           <Modal
-            title="Card is selected"
+            title={selectedCardTitle}
             visible={this.state.visible}
             onOk={this.handleOk}
             onCancel={this.handleCancel}>
-            <p>Position: {this.state.selectedCard}</p>
+            <CardModalTitle onInput={this.handleChangeTitle} contentEditable>
+              {selectedCardTitle}
+            </CardModalTitle>
+            <CardModalDescription
+              onInput={this.handleChangeDescription}
+              contentEditable>
+              {selectedCardDescription}
+            </CardModalDescription>
           </Modal>
         </Content>
       </Container>

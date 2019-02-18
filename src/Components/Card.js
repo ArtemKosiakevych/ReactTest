@@ -34,6 +34,13 @@ const Title = styled.h1`
   line-height: 26px;
 `
 
+const Description = styled.h1`
+  font-size: 15px;
+  font-family: 'Noto Serif', serif;
+  margin: 5px 20px;
+  line-height: 16px;
+`
+
 const DataBlocks = styled.div`
   flex-direction: row;
   display: flex;
@@ -126,6 +133,7 @@ export default class Card extends React.Component {
         <div>
           <Image src={picture} />
           <Title>{this.props.title}</Title>
+          <Description>{this.props.description}</Description>
         </div>
         <DataBlocks>
           {dataArray.map((i, index) => {
