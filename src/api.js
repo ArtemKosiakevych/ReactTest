@@ -17,3 +17,5 @@ instance.interceptors.request.use(null, function(error) {
 export const getNotes = () => instance.get('/notes')
 
 export const updateNote = (id, note) => instance.put(`/notes/${id}`, note)
+
+export const deleteNote = id => instance.delete(`/delete/${id}`)

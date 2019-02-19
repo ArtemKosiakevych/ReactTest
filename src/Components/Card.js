@@ -20,6 +20,7 @@ const Main = styled.h1`
     transform: translateY(-6px);
   }
   animation: 0.3s ${fadeAnimation};
+  position: relative;
 `
 const Image = styled.img`
   height: 220px;
@@ -98,6 +99,14 @@ const Count = styled.span`
   text-align: center;
   align-self: center;
 `
+
+const Delete = styled(Icon)`
+  position: absolute;
+  color: red;
+  top: 10px;
+  right: 10px;
+  padding: 5px;
+`
 export default class Card extends React.Component {
   render() {
     const picture =
@@ -129,9 +138,10 @@ export default class Card extends React.Component {
       },
     ]
     return (
-      <Main onClick={this.props.onClick}>
+      <Main>
+        <Delete type="delete" theme="filled" onClick={this.props.onDelete} />
         <div>
-          <Image src={picture} />
+          <Image onClick={this.props.onClick} src={picture} />
           <Title>{this.props.title}</Title>
           <Description>{this.props.description}</Description>
         </div>

@@ -10,7 +10,7 @@ import {
   CardModalTitle,
   CardModalDescription,
 } from './HomeStyled'
-import { getNotes, updateNote } from '../api'
+import { getNotes, updateNote, deleteNote } from '../api'
 
 export default class HomeScreen extends Component {
   state = {
@@ -35,6 +35,14 @@ export default class HomeScreen extends Component {
       visible: true,
       selectedCard: index,
     })
+  }
+
+  handleCardDelete = async index => {
+    const { data } = this.state
+    if (data && data[index]._id) {
+      await deleteNote(data[index]._id)
+      this.fetchData()
+    }
   }
 
   handleOk = async () => {
@@ -96,6 +104,7 @@ export default class HomeScreen extends Component {
                       title={i.title}
                       description={i.description}
                       onClick={() => this.handleCardClick(index)}
+                      onDelete={() => this.handleCardDelete(index)}
                     />
                   ) : (
                     <Skeleton active paragraph={{ rows: 3 }} />
