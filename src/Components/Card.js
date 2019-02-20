@@ -42,64 +42,6 @@ const Description = styled.h1`
   line-height: 16px;
 `
 
-const DataBlocks = styled.div`
-  flex-direction: row;
-  display: flex;
-  margin: 0px 19px 15px;
-`
-
-const DataBlock = styled.div`
-  box-sizing: border-box;
-  height: 34px;
-  width: 63px;
-  margin-right: 6px;
-  border: ${props => `1px solid ${props.borderColor}`};
-  border-radius: 4px;
-  flex-direction: 'row';
-  display: flex;
-  align-items: center;
-`
-
-const IconWrapper = styled.div`
-  height: 100%;
-  width: 26px;
-  border-radius: 4px 0 0 4px;
-  background-color: rgb(21, 104, 185, 0.1);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-const StyledIcon = styled(Icon)`
-  color: ${props => props.color};
-  font-size: 20px;
-  padding: 3px 3px;
-`
-
-const HoursWrapper = styled.div`
-  flex-direction: column;
-  display: flex;
-  width: 100%;
-  justify-content: 'center';
-  align-items: 'center';
-`
-
-const Label = styled.span`
-  color: ${props => props.color};
-  font-family: 'Noto Sans';
-  font-size: 10px;
-  font-weight: bold;
-  line-height: 17px;
-  align-self: center;
-`
-const Count = styled.span`
-  color: #344442;
-  font-family: 'Noto Sans';
-  font-size: 16px;
-  line-height: 17px;
-  text-align: center;
-  align-self: center;
-`
-
 const Delete = styled(Icon)`
   position: absolute;
   color: red;
@@ -111,32 +53,7 @@ export default class Card extends React.Component {
   render() {
     const picture =
       'https://c1.staticflickr.com/2/1520/24330829813_944c817720_b.jpg'
-    const dataArray = [
-      {
-        icon: 'slack',
-        label: 'days',
-        count: 12,
-        color: '#1568B9',
-      },
-      {
-        icon: 'twitter',
-        label: 'HRS',
-        count: 12,
-        color: '#169080',
-      },
-      {
-        icon: 'skype',
-        label: 'min',
-        count: 12,
-        color: '#87BD24',
-      },
-      {
-        icon: 'github',
-        label: 'hrs',
-        count: 12,
-        color: '#858F8E',
-      },
-    ]
+
     return (
       <Main>
         <Delete type="delete" theme="filled" onClick={this.props.onDelete} />
@@ -148,21 +65,6 @@ export default class Card extends React.Component {
           <Title>{this.props.title}</Title>
           <Description>{this.props.description}</Description>
         </div>
-        <DataBlocks>
-          {dataArray.map((i, index) => {
-            return (
-              <DataBlock key={index} borderColor={i.color}>
-                <IconWrapper>
-                  <StyledIcon color={i.color} type={i.icon} />
-                </IconWrapper>
-                <HoursWrapper>
-                  <Label color={i.color}>{i.label.toUpperCase()}</Label>
-                  <Count>{i.count.toString().toUpperCase()}</Count>
-                </HoursWrapper>
-              </DataBlock>
-            )
-          })}
-        </DataBlocks>
       </Main>
     )
   }
