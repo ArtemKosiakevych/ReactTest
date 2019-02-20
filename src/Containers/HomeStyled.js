@@ -1,4 +1,6 @@
+import { Button as AntButton } from 'antd'
 import styled from 'styled-components'
+import { Main } from '../Components/Card'
 
 export const Content = styled.div`
   width: 100%;
@@ -8,22 +10,6 @@ export const Content = styled.div`
   background-color: #f8fafa;
   position: relative;
   max-width: 1180px;
-`
-
-export const EmptyComponent = styled.div`
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  padding: 100px 5%;
-  background-color: #f8fafa;
-  display: flex;
-
-  span {
-    font-size: 20px;
-    width: 100%;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    text-align: center;
-  }
 `
 
 export const Container = styled.div`
@@ -38,4 +24,14 @@ export const CardModalTitle = styled.p`
 
 export const CardModalDescription = styled.p`
   font-size: 16px;
+`
+
+export const Button = styled(AntButton)`
+  height: 80px;
+  width: 80px;
+  align-self: center;
+`
+
+export const EmptyCard = styled(Main)`
+  justify-content: center;
 `

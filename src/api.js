@@ -19,3 +19,5 @@ export const getNotes = () => instance.get('/notes')
 export const updateNote = (id, note) => instance.put(`/notes/${id}`, note)
 
 export const deleteNote = id => instance.delete(`/delete/${id}`)
+
+export const addNote = note => instance.post(`/notes`, note)

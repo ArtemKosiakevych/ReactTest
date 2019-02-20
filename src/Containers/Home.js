@@ -6,19 +6,22 @@ import Card from '../Components/Card'
 import {
   Container,
   Content,
-  EmptyComponent,
   CardModalTitle,
   CardModalDescription,
+  Button,
+  EmptyCard,
 } from './HomeStyled'
-import { getNotes, updateNote, deleteNote } from '../api'
-
+import { getNotes, updateNote, deleteNote, addNote } from '../api'
 export default class HomeScreen extends Component {
+  note = { title: 'Note', description: 'Description' }
   state = {
     visible: false,
     query: '',
     ready: false,
     data: [],
     selectedCardTitle: '',
+    creating: false,
+    createNoteVisible: false,
   }
 
   componentDidMount() {
@@ -79,9 +82,49 @@ export default class HomeScreen extends Component {
     this.setState({ selectedCardDescription: event.target.textContent })
   }
 
+  handleChangeNoteTitle = event => {
+    this.note.title = event.target.textContent
+  }
+
+  handleChangeNoteDescription = event => {
+    this.note.description = event.target.textContent
+  }
+
   handleProfile = () => {}
+
+  handleCreateNote = () => {
+    this.note = { title: 'Note', description: 'Description' }
+    this.setState({ createNoteVisible: true })
+  }
+
+  closeCreateNote = () => {
+    this.setState({ createNoteVisible: false })
+  }
+
+  createNote = async () => {
+    const { title, description } = this.note
+    this.setState({ creating: true })
+    await addNote({ title, description })
+    await this.fetchData()
+    this.setState({ creating: false, createNoteVisible: false })
+  }
+
+  renderCreateNote() {
+    return (
+      <EmptyCard>
+        <Button onClick={this.handleCreateNote} icon="plus" />
+      </EmptyCard>
+    )
+  }
+
   render() {
-    const { data, query, selectedCard } = this.state
+    const {
+      data,
+      query,
+      selectedCard,
+      creating,
+      createNoteVisible,
+    } = this.state
     const notes = data.filter(i =>
       i.title.toLowerCase().includes(query.toLowerCase()),
     )
@@ -95,28 +138,25 @@ export default class HomeScreen extends Component {
           handleSearch={this.handleSearch}
         />
         <Content>
-          {notes.length > 0 ? (
-            <Row gutter={10}>
-              {notes.map((i, index) => (
-                <Col key={index} xl={8} lg={12} md={12} xs={24}>
-                  {this.state.ready ? (
-                    <Card
-                      title={i.title}
-                      description={i.description}
-                      onClick={() => this.handleCardClick(index)}
-                      onDelete={() => this.handleCardDelete(index)}
-                    />
-                  ) : (
-                    <Skeleton active paragraph={{ rows: 3 }} />
-                  )}
-                </Col>
-              ))}
-            </Row>
-          ) : (
-            <EmptyComponent>
-              <Spin />
-            </EmptyComponent>
-          )}
+          <Row gutter={10}>
+            <Col xl={8} lg={12} md={12} xs={24}>
+              {this.renderCreateNote()}
+            </Col>
+            {notes.map((i, index) => (
+              <Col key={index} xl={8} lg={12} md={12} xs={24}>
+                {this.state.ready ? (
+                  <Card
+                    title={i.title}
+                    description={i.description}
+                    onClick={() => this.handleCardClick(index)}
+                    onDelete={() => this.handleCardDelete(index)}
+                  />
+                ) : (
+                  <Skeleton active paragraph={{ rows: 3 }} />
+                )}
+              </Col>
+            ))}
+          </Row>
           <Modal
             title={selectedCardTitle}
             visible={this.state.visible}
@@ -129,6 +169,25 @@ export default class HomeScreen extends Component {
               onInput={this.handleChangeDescription}
               contentEditable>
               {selectedCardDescription}
+            </CardModalDescription>
+          </Modal>
+
+          <Modal
+            title="Create Note"
+            visible={createNoteVisible}
+            onOk={this.createNote}
+            confirmLoading={creating}
+            onCancel={this.closeCreateNote}
+            okText={'Create'}>
+            <CardModalTitle
+              onInput={this.handleChangeNoteTitle}
+              contentEditable>
+              {this.note.title}
+            </CardModalTitle>
+            <CardModalDescription
+              onInput={this.handleChangeNoteDescription}
+              contentEditable>
+              {this.note.description}
             </CardModalDescription>
           </Modal>
         </Content>

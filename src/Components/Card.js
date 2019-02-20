@@ -5,7 +5,7 @@ import { Icon } from 'antd'
 import { fadeIn } from 'react-animations'
 const fadeAnimation = keyframes`${fadeIn}`
 
-const Main = styled.h1`
+export const Main = styled.h1`
   height: 366px;
   width: 100%;
   border-radius: 4px;
