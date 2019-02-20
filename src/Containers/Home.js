@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Row, Col, Modal, Spin, Skeleton } from 'antd'
+import { Row, Col, Modal, Icon, Skeleton, Upload } from 'antd'
 
 import Header from '../Components/Header'
 import Card from '../Components/Card'
@@ -22,6 +22,9 @@ export default class HomeScreen extends Component {
     selectedCardTitle: '',
     creating: false,
     createNoteVisible: false,
+    previewVisible: false,
+    previewImage: '',
+    fileList: [],
   }
 
   componentDidMount() {
@@ -94,7 +97,7 @@ export default class HomeScreen extends Component {
 
   handleCreateNote = () => {
     this.note = { title: 'Note', description: 'Description' }
-    this.setState({ createNoteVisible: true })
+    this.setState({ createNoteVisible: true, fileList: [] })
   }
 
   closeCreateNote = () => {
@@ -102,11 +105,26 @@ export default class HomeScreen extends Component {
   }
 
   createNote = async () => {
+    const fileList = this.state.fileList
+    const photo = (fileList.length > 0 && fileList[0].thumbUrl) || null
     const { title, description } = this.note
     this.setState({ creating: true })
-    await addNote({ title, description })
+    await addNote({ title, description, photo })
     await this.fetchData()
     this.setState({ creating: false, createNoteVisible: false })
+  }
+
+  handleCancelPreview = () => this.setState({ previewVisible: false })
+
+  handlePreview = file => {
+    this.setState({
+      previewImage: file.url || file.thumbUrl,
+      previewVisible: true,
+    })
+  }
+
+  handlePickPhoto = ({ fileList }) => {
+    this.setState({ fileList })
   }
 
   renderCreateNote() {
@@ -124,6 +142,9 @@ export default class HomeScreen extends Component {
       selectedCard,
       creating,
       createNoteVisible,
+      previewVisible,
+      previewImage,
+      fileList,
     } = this.state
     const notes = data.filter(i =>
       i.title.toLowerCase().includes(query.toLowerCase()),
@@ -131,6 +152,14 @@ export default class HomeScreen extends Component {
     const selectedCardTitle = data[selectedCard] && data[selectedCard].title
     const selectedCardDescription =
       data[selectedCard] && data[selectedCard].description
+
+    const uploadButton = (
+      <div>
+        <Icon type="plus" />
+        <div className="ant-upload-text">Upload</div>
+      </div>
+    )
+
     return (
       <Container>
         <Header
@@ -148,6 +177,7 @@ export default class HomeScreen extends Component {
                   <Card
                     title={i.title}
                     description={i.description}
+                    photo={i.photo}
                     onClick={() => this.handleCardClick(index)}
                     onDelete={() => this.handleCardDelete(index)}
                   />
@@ -189,6 +219,20 @@ export default class HomeScreen extends Component {
               contentEditable>
               {this.note.description}
             </CardModalDescription>
+            <Upload
+              action="//jsonplaceholder.typicode.com/posts/"
+              listType="picture-card"
+              fileList={fileList}
+              onPreview={this.handlePreview}
+              onChange={this.handlePickPhoto}>
+              {fileList.length >= 2 ? null : uploadButton}
+            </Upload>
+            <Modal
+              visible={previewVisible}
+              footer={null}
+              onCancel={this.handleCancelPreview}>
+              <img alt="example" style={{ width: '100%' }} src={previewImage} />
+            </Modal>
           </Modal>
         </Content>
       </Container>

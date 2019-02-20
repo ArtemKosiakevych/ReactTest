@@ -141,7 +141,10 @@ export default class Card extends React.Component {
       <Main>
         <Delete type="delete" theme="filled" onClick={this.props.onDelete} />
         <div>
-          <Image onClick={this.props.onClick} src={picture} />
+          <Image
+            onClick={this.props.onClick}
+            src={this.props.photo || picture}
+          />
           <Title>{this.props.title}</Title>
           <Description>{this.props.description}</Description>
         </div>
